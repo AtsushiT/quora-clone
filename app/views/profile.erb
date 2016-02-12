@@ -1,0 +1,21 @@
+<h2>Profile</h2>
+<table>
+  <tbody>
+    <tr>
+      <td>First Name</td>
+      <td><%= @user.first_name %></td>
+    </tr>
+    <tr>
+      <td>Last Name</td>
+      <td><%= @user.last_name %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= @user.email %></td>
+    </tr>
+  </tbody>
+</table>
+<form method="post" action="/session">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Log out">
+</form>
