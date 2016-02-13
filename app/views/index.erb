@@ -1,2 +1,9 @@
-<h1>Hello World</h1>
+<h1>Quora clone</h1>
 <p>See Me in views/static/index.html.erb</p>
+<h2>Questions</h2>
+<% @questions.each do |question| %>
+  <h3><%= question.question_title %></h3>
+  <!-- how to show content of question with limit length -->
+  <!-- how to make a link to a question detailed page -->
+  <p><a href="">more</a></p>
+<% end %>

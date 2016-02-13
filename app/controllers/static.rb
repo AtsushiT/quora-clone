@@ -1,6 +1,7 @@
 enable :sessions
 
 get '/' do
+  @questions = Question.all
   erb :index
 end
 
@@ -91,8 +92,8 @@ end
 
 #Question post form
 post '/users/:user_id/questions/new' do
-  question = Question.new(question_title: params[:question_title], question_content: params[question_content])
-  if question.save!
+  @question = Question.new(question_title: params[:question_title], question_content: params[:question_content])
+  if @question.save
     redirect '/'
   else
     redirect '/users/:user_id/questions/new'
