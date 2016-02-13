@@ -23,7 +23,7 @@ post '/signup' do
   user.encrypt_password(params[:password])
   if user.save!
     session[:user_id] = user.id
-    redirect "/users/:id" #user dashboard page
+    redirect "/users/:user_id" #user dashboard page
   else
     redirect "/signup"
     #error message?
@@ -42,13 +42,13 @@ end
 #login action
 post '/login' do
   if session[:user_id]
-    redirect "/users/:id"
+    redirect "/users/:user_id"
   end
 
   user = User.authenticate(params[:email], params[:password])
   if user
     session[:user_id] = user.id
-    redirect '/users/:id'
+    redirect '/users/:user_id'
   else
     redirect "/login"
   end
@@ -70,13 +70,33 @@ delete '/session' do
 end
 
 # check whethere bug is or not
-get '/users/:id' do
-    @user = User.find(session[:user_id])
-    if @user
-      erb :profile
-    else
-      redirect '/login'
-    end
+get '/users/:user_id' do
+  @user = User.find(session[:user_id])
+  if @user
+    erb :profile
+  else
+    redirect '/login'
   end
+end
 
+#Question create page
+get '/users/:user_id/questions/new' do
+  @user = User.find(session[:user_id])
+  if @user
+    erb :create_question
+  else
+    redirect '/login'
+  end
+end
+
+#Question post form
+post '/users/:user_id/questions/new' do
+  question = Question.new(question_title: params[:question_title], question_content: params[question_content])
+  if question.save!
+    redirect '/'
+  else
+    redirect '/users/:user_id/questions/new'
+    # error message?
+  end
+end
 
